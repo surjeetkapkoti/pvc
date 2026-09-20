@@ -12,7 +12,7 @@ patches:
         value: uat-pvc
       - op: replace
         path: /spec/accessModes/0
-        value: ReadWriteOnly
+        value: ReadWriteOnce
       - op: replace
         path: /spec/storageClassName
         value: freenas-iscsi

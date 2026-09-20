@@ -18,4 +18,4 @@ patches:
         value: freenas-iscsi
       - op: replace
         path: /spec/resources/requests/storage
-        value: 40Gi
+        value: 50Gi

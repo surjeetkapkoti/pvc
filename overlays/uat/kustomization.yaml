@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+patches:
+  - target:
+      kind: PersistentVolumeClaim
+      name: claimname
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: uat-pvc
+      - op: replace
+        path: /spec/accessModes/0
+        value: ReadWriteMany
+      - op: replace
+        path: /spec/storageClassName
+        value: nfs-storageclass
+      - op: replace
+        path: /spec/resources/requests/storage
+        value: 40Gi

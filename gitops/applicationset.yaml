@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pvc-all-envs
+  namespace: openshift-gitops
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - clusters:
+        selector:
+          matchExpressions:
+            - key: apps.open-cluster-management.io/acm-cluster
+              operator: In
+              values: ["true"]
+            - key: env
+              operator: Exists
+  template:
+    metadata:
+      name: 'pvc-{{ index .metadata.labels "env" }}-{{ .name }}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/surjeetkapkoti/pvc.git
+        targetRevision: main
+        path: 'overlays/{{ index .metadata.labels "env" }}'
+      destination:
+        server: '{{ .server }}'
+        namespace: my-app
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

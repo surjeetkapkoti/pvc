@@ -12,10 +12,10 @@ patches:
         value: prod-pvc
       - op: replace
         path: /spec/accessModes/0
-        value: ReadWriteMany
+        value: ReadWriteOnce
       - op: replace
         path: /spec/storageClassName
-        value: obj-storageclass
+        value: freenas-iscsi
       - op: replace
         path: /spec/resources/requests/storage
         value: 20Gi
